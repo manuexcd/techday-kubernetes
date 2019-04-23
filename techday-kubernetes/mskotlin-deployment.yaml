@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: mskotlin
+  name: mskotlin-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mskotlin
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mskotlin
+    spec:
+      containers:
+      - env:
+        - name: SPRING_DATA_MONGODB_URI
+          value: mongodb://mongodb-service:27017/techday
+        image: manuexcd/mskotlin
+        name: mskotlin
+        ports:
+        - containerPort: 8081
+      restartPolicy: Always

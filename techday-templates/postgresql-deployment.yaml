@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: {label}
+  name: {deploymentName}
+spec:
+  selector:
+    matchLabels:
+      app: {label}
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {label}
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_DB
+          value: techday
+        - name: POSTGRES_PASSWORD
+          value: pass
+        - name: POSTGRES_USER
+          value: user
+        image: postgres:10.4
+        name: postgresql
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/lib/postgresql
+          name: {volumeName}
+      restartPolicy: Always
+      volumes:
+      - name: {volumeName}
+        persistentVolumeClaim:
+          claimName: {claimName}

@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: msjavaconsumer
+  name: msjavaconsumer-deployment
+spec:
+  selector:
+    matchLabels:
+      app: msjavaconsumer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: msjavaconsumer
+    spec:
+      containers:
+      - env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://postgresql-service:5432/techday
+        - name: SPRING_RABBITMQ_HOST
+          value: rabbitmq-service
+        image: manuexcd/msjavaconsumer
+        name: msjavaconsumer
+        ports:
+        - containerPort: 8082
+      restartPolicy: Always

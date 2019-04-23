@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: {label}
+  name: {deploymentName}
+spec:
+  selector:
+    matchLabels:
+      app: {label}
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {label}
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: techday
+        - name: MYSQL_PASSWORD
+          value: pass
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        - name: MYSQL_USER
+          value: user
+        image: mariadb
+        name: mariadb
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: {volumeName}
+      restartPolicy: Always
+      volumes:
+      - name: {volumeName}
+        persistentVolumeClaim:
+          claimName: {claimName}

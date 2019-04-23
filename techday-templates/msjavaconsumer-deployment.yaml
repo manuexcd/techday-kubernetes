@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: {label}
+  name: {deploymentName}
+spec:
+  selector:
+    matchLabels:
+      app: {label}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {label}
+    spec:
+      containers:
+      - env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://{serviceName}:5432/techday
+        - name: SPRING_RABBITMQ_HOST
+          value: {serviceName}
+        image: manuexcd/msjavaconsumer
+        name: msjavaconsumer
+        ports:
+        - containerPort: 8082
+      restartPolicy: Always

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: msjavaconsumer
+  name: msjavaconsumer-service
+spec:
+  ports:
+  - name: "8082"
+    port: 8082
+    targetPort: 8082
+  selector:
+    app: msjavaconsumer
+  type: LoadBalancer
