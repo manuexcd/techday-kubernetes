@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {label}
+  name: {serviceName}
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+    targetPort: 27017
+  selector:
+    app: {label}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: {label}
+  name: {name}
+spec:
+  selector:
+    matchLabels:
+      app: {label}
+  replicas: 1
+  serviceName: {name}
+  template:
+    metadata:
+      labels:
+        app: {label}
+    spec:
+      containers:
+      - image: mongo
+        name: mongodb
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - mountPath: /data/db
+          name: {volumeName}
+      restartPolicy: Always
+      volumes:
+      - name: {volumeName}
+        persistentVolumeClaim:
+          claimName: {claimName}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: {label}
+  name: {claimName}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi

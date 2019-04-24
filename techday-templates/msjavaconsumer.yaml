@@ -1,3 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {label}
+  name: {serviceName}
+spec:
+  ports:
+  - name: "8082"
+    port: 8082
+    targetPort: 8082
+  selector:
+    app: {label}
+  type: {servicetype}
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -16,14 +31,12 @@ spec:
     spec:
       containers:
       - env:
-        - name: MICROSERVICES_MSKOTLIN_URL
-          value: http://{serviceName}:8081/mskotlin
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://{serviceName}:3306/techday
+          value: jdbc:postgresql://{serviceName}:5432/techday
         - name: SPRING_RABBITMQ_HOST
           value: {serviceName}
-        image: manuexcd/msjava
-        name: msjava
+        image: manuexcd/msjavaconsumer
+        name: msjavaconsumer
         ports:
-          - containerPort: 8080
+        - containerPort: 8082
       restartPolicy: Always

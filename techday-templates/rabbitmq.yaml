@@ -1,5 +1,23 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {label}
+  name: {serviceName}
+spec:
+  ports:
+  - name: "5672"
+    port: 5672
+    targetPort: 5672
+  - name: "15672"
+    port: 15672
+    targetPort: 15672
+  selector:
+    app: {selector}
+  type: {serviceType}
+---
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   labels:
     app: {label}
@@ -9,8 +27,7 @@ spec:
     matchLabels:
       app: {selector}
   replicas: 1
-  strategy:
-    type: Recreate
+  serviceName: {name}
   template:
     metadata:
       labels:
@@ -31,3 +48,16 @@ spec:
       - name: {volumeName}
         persistentVolumeClaim:
           claimName: {claimName}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: {label}
+  name: {claimName}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi

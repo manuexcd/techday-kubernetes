@@ -1,16 +1,15 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   labels:
     app: rabbitmq
-  name: rabbitmq-deployment
+  name: rabbitmq
 spec:
   selector:
     matchLabels:
       app: rabbitmq
   replicas: 1
-  strategy:
-    type: Recreate
+  serviceName: rabbitmq
   template:
     metadata:
       labels:

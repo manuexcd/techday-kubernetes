@@ -1,16 +1,15 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   labels:
     app: postgresql
-  name: postgresql-deployment
+  name: postgresql-statefulset
 spec:
   selector:
     matchLabels:
       app: postgresql
   replicas: 1
-  strategy:
-    type: Recreate
+  serviceName: postgresql
   template:
     metadata:
       labels:

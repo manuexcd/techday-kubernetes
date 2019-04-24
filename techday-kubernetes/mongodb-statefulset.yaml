@@ -1,17 +1,19 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   labels:
-    app: {label}
-  name: {deploymentName}
+    app: mongodb
+  name: mongodb
 spec:
+  selector:
+    matchLabels:
+      app: mongodb
   replicas: 1
-  strategy:
-    type: Recreate
+  serviceName: mongodb
   template:
     metadata:
       labels:
-        app: {label}
+        app: mongodb
     spec:
       containers:
       - image: mongo
@@ -20,9 +22,9 @@ spec:
         - containerPort: 27017
         volumeMounts:
         - mountPath: /data/db
-          name: {volumeName}
+          name: mongodb-volume
       restartPolicy: Always
       volumes:
-      - name: {volumeName}
+      - name: mongodb-volume
         persistentVolumeClaim:
-          claimName: {claimName}
+          claimName: mongodb-pvc
