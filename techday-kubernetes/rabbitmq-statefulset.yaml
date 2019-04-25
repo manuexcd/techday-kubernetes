@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   labels:
     app: rabbitmq
-  name: rabbitmq
+  name: rabbitmq-statefulset
 spec:
   selector:
     matchLabels:

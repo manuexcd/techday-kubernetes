@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   labels:
     app: mariadb
-  name: mariadb
+  name: mariadb-statefulset
 spec:
   selector:
     matchLabels:

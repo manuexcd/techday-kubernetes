@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   labels:
     app: mongodb
-  name: mongodb
+  name: mongodb-statefulset
 spec:
   selector:
     matchLabels:
