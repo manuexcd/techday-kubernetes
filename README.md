@@ -1,8 +1,5 @@
 # Taller TechDay Kubernetes
 
-### Requisitos
-1. Instalar [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
-
 El objetivo es montar la siguiente arquitectura con microservicios:
 
 [![N|Solid](https://i.ibb.co/sQR5pRz/Untitled-Diagram-4.png)](https://nodesource.com/products/nsolid)
